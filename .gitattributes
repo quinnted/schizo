@@ -1,0 +1,8 @@
+# windows powershell 5.1 reads bom-less files as the ansi codepage. the
+# tests keep every source file ascii, so that never matters; crlf keeps
+# notepad and older editors happy.
+*.ps1   text eol=crlf
+*.psm1  text eol=crlf
+*.psd1  text eol=crlf
+*.md    text eol=lf
+*.yml   text eol=lf
