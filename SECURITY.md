@@ -22,9 +22,10 @@ under `C:\Program Files`) and read it there.
 - Rules are `.psd1` data files loaded with `Import-PowerShellDataFile`, which
   rejects code. Registry rules can only write to an explicit list of keys
   (`$AllowedKeys` in `lib\rules.ps1`), and machine environment variables only
-  when the name contains `TELEMETRY` or `DO_NOT_TRACK`. Defender, Windows
-  Update, firewall, SmartScreen and UAC policies are refused by name, as are
-  security services. Firewall programs must be literal paths under a drive, a
+  when the name contains `TELEMETRY` or `DO_NOT_TRACK`. Rules are prevented
+  from modifying Defender, Windows Update, Windows Firewall, SmartScreen or
+  UAC: the loader rejects any rule whose target is one of their policy keys
+  or services, so schizo can't change them even by mistake. Firewall programs must be literal paths under a drive, a
   known folder, or the app's install folder.
   This contains mistakes in rules and tampering with the journal. It does not
   make a tampered checkout safe: whoever can edit `rules\` can edit `lib\`.

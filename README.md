@@ -20,13 +20,25 @@ internet as Administrator, and this is random PowerShell from the internet.
 git clone https://github.com/<you>/schizo
 cd schizo
 # read schizo.ps1, lib\ and rules\
-powershell -ExecutionPolicy Bypass -File .\schizo.ps1 -Audit   # what would change; no admin needed
-powershell -ExecutionPolicy Bypass -File .\schizo.ps1          # from an Administrator PowerShell
+.\schizo.ps1 -Audit -ShowUnknown   # what would change; no admin needed
+.\schizo.ps1                       # from an Administrator PowerShell
 ```
 
-`-ExecutionPolicy Bypass` only applies to that one process. Don't change
-your machine-wide policy for this. On a shared PC, keep the folder somewhere
-only administrators can write; see SECURITY.md.
+If PowerShell answers "running scripts is disabled on this system", that's
+the Windows default (`Restricted`). Allow local scripts for that one window
+only:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+```
+
+It lasts until you close the window and doesn't change your machine. If you
+downloaded a zip instead of cloning, Windows marks every file as downloaded
+and `RemoteSigned` still refuses them; read them, then run
+`Get-ChildItem -Recurse | Unblock-File` in the folder.
+
+On a shared PC, keep the folder somewhere only administrators can write; see
+SECURITY.md.
 
 There is no installer, service, scheduled task, tray icon or account. schizo
 runs, changes things, prints what it did and exits. The settings it makes
@@ -102,7 +114,7 @@ rules, untrusted backup folder, managed machine).
 ## Restoring
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\restore.ps1          # from an Administrator PowerShell
+.\restore.ps1                      # from an Administrator PowerShell
 ```
 
 Restore puts back the state from before schizo *first* changed each thing,
@@ -134,13 +146,14 @@ How:
 - **environment variables** command-line tools document as their opt-out.
 - **one service**, DiagTrack, with `-Aggressive` only.
 - **outbound firewall rules** for programs that have no business on the
-  network. Currently 7-Zip, whose source has no network code and no updater.
+  network. Currently 7-Zip, which has no updater and no HTTP or socket code.
 
-What it won't do: turn off Defender, Windows Update, the firewall,
-SmartScreen, UAC or crash reporting that Microsoft uses for security fixes;
-edit the hosts file; block IP addresses; uninstall your software; remove
-browser extensions. `docs\not-shipped.md` lists the popular tweaks that
-aren't here and why.
+What it won't do: change Defender, Windows Update, Windows Firewall's own
+settings, SmartScreen, UAC, or the crash reporting Microsoft uses for
+security fixes. Those stay exactly as they are; a rule that tries to modify
+them is rejected when the rules load. It also won't edit the hosts file,
+block IP addresses, uninstall your software or remove browser extensions.
+`docs\not-shipped.md` lists the popular tweaks that aren't here and why.
 
 ### Levels
 
