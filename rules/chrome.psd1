@@ -32,7 +32,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#UrlKeyedAnonymizedDataCollectionEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -45,7 +45,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#DomainReliabilityAllowed'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -58,7 +58,7 @@
             Breaks   = 'Enhanced spellcheck suggestions.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#SpellCheckServiceEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -77,7 +77,7 @@
             Source   = 'https://chromeenterprise.google/policies/#UserFeedbackAllowed',
                        'https://chromeenterprise.google/policies/#FeedbackSurveysEnabled',
                        'https://chromeenterprise.google/policies/#SafeBrowsingSurveysEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -90,7 +90,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#PromotionsEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -103,7 +103,7 @@
             Breaks   = 'Suggestions on error pages.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#AlternateErrorPagesEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -116,7 +116,7 @@
             Breaks   = 'Some express checkout buttons may not appear.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#PaymentMethodQueryEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -129,7 +129,7 @@
             Breaks   = 'Page loads can be slightly slower.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#NetworkPredictionOptions'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -142,7 +142,7 @@
             Breaks   = 'Extensions that run while Chrome is closed.'
             Level    = 'verified'
             Source   = 'https://chromeenterprise.google/policies/#BackgroundModeEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: accepted (chrome://policy shows OK), restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored; chrome://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -155,7 +155,7 @@
             Breaks   = 'Search suggestions while typing.'
             Level    = 'aggressive'
             Source   = 'https://chromeenterprise.google/policies/#SearchSuggestEnabled'
-            Tested   = 'chrome 156, win11 pro 26300 vm: applied and restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -168,7 +168,7 @@
             Breaks   = 'Some sign-in flows, embedded comments and payment widgets.'
             Level    = 'aggressive'
             Source   = 'https://chromeenterprise.google/policies/#BlockThirdPartyCookies'
-            Tested   = 'chrome 156, win11 pro 26300 vm: applied and restored'
+            Tested   = 'chrome 156, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

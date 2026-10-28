@@ -38,7 +38,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/microsoft-365-apps/privacy/manage-privacy-controls',
                        'https://learn.microsoft.com/en-us/microsoft-365-apps/privacy/products-versions-privacy-controls'
-            Tested   = 'not run: office was not installed in the test vm'
+            Tested   = 'microsoft 365 apps (unactivated), win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -51,7 +51,7 @@
             Breaks   = 'Those features.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/microsoft-365-apps/privacy/manage-privacy-controls'
-            Tested   = 'not run: office was not installed in the test vm'
+            Tested   = 'microsoft 365 apps (unactivated), win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -64,7 +64,7 @@
             Breaks   = 'Designer, Translator, Editor''s cloud checks, dictation and similar features.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/microsoft-365-apps/privacy/manage-privacy-controls'
-            Tested   = 'not run: office was not installed in the test vm'
+            Tested   = 'microsoft 365 apps (unactivated), win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -80,7 +80,7 @@
             Breaks   = 'Sending feedback from the OneDrive app.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/sharepoint/use-group-policy'
-            Tested   = 'win11 pro 26300 vm (inbox onedrive): applied and restored'
+            Tested   = 'win11 pro and home 26300 vms (inbox onedrive): applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -94,7 +94,7 @@
             Level    = 'verified'
             Source   = 'https://code.visualstudio.com/docs/enterprise/policies',
                        'https://code.visualstudio.com/docs/configure/telemetry'
-            Tested   = 'vs code 1.143, win11 pro 26300 vm: applied and restored'
+            Tested   = 'vs code 1.143, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -107,7 +107,7 @@
             Breaks   = 'The issue reporter and survey prompts.'
             Level    = 'verified'
             Source   = 'https://code.visualstudio.com/docs/enterprise/policies'
-            Tested   = 'vs code 1.143, win11 pro 26300 vm: applied and restored'
+            Tested   = 'vs code 1.143, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -120,7 +120,7 @@
             Breaks   = 'Nothing. Report a Problem still works.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/visualstudio/ide/visual-studio-experience-improvement-program'
-            Tested   = 'not run: visual studio was not installed in the test vm'
+            Tested   = 'build tools 2022, win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

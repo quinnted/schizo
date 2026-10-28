@@ -32,7 +32,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://mozilla.github.io/policy-templates/#disabletelemetry'
-            Tested   = 'firefox 159, win11 pro 26300 vm: accepted (about:policies, no errors), restored'
+            Tested   = 'firefox 159, win11 pro and home 26300 vms: applied and restored; about:policies, no errors on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -46,7 +46,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://mozilla.github.io/policy-templates/#disablefirefoxstudies'
-            Tested   = 'firefox 159, win11 pro 26300 vm: accepted (about:policies, no errors), restored'
+            Tested   = 'firefox 159, win11 pro and home 26300 vms: applied and restored; about:policies, no errors on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -60,7 +60,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://mozilla.github.io/policy-templates/#disabledefaultbrowseragent'
-            Tested   = 'firefox 159, win11 pro 26300 vm: accepted (about:policies, no errors), restored'
+            Tested   = 'firefox 159, win11 pro and home 26300 vms: applied and restored; about:policies, no errors on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -78,7 +78,7 @@
             Breaks   = 'Nothing. Your own shortcuts stay.'
             Level    = 'verified'
             Source   = 'https://mozilla.github.io/policy-templates/#firefoxhome'
-            Tested   = 'firefox 159, win11 pro 26300 vm: accepted (about:policies, no errors), restored'
+            Tested   = 'firefox 159, win11 pro and home 26300 vms: applied and restored; about:policies, no errors on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -97,7 +97,7 @@
             Level    = 'verified'
             Source   = 'https://mozilla.github.io/policy-templates/#firefoxsuggest',
                        'https://github.com/mozilla-firefox/firefox/blob/release/browser/components/enterprisepolicies/schemas/policies-schema.json'
-            Tested   = 'firefox 159, win11 pro 26300 vm: accepted (about:policies, no errors), restored'
+            Tested   = 'firefox 159, win11 pro and home 26300 vms: applied and restored; about:policies, no errors on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -111,7 +111,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://github.com/thunderbird/policy-templates/blob/master/docs/policies/release/README.md'
-            Tested   = 'thunderbird, win11 pro 26300 vm: applied and restored'
+            Tested   = 'thunderbird, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

@@ -26,12 +26,14 @@ param(
     [Parameter(Mandatory)][pscredential]$Credential,
     [string]$Vmrun = "${env:ProgramFiles(x86)}\VMware\VMware Workstation\vmrun.exe",
     [switch]$Online,
+    # where results land; give each VM its own when running several at once
+    [string]$Out,
     [switch]$KeepRunning
 )
 
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
-$out = Join-Path $repo 'tests\vm\out'
+$out = if ($Out) { $Out } else { Join-Path $repo 'tests\vm\out' }
 $user = $Credential.UserName
 $pass = $Credential.GetNetworkCredential().Password
 

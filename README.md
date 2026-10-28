@@ -1,5 +1,7 @@
 # schizo
 
+[![ci](https://github.com/quinnted/schizo/actions/workflows/ci.yml/badge.svg)](https://github.com/quinnted/schizo/actions/workflows/ci.yml)
+
 Windows and the software on it talk too much.
 
 schizo looks at what's installed and applies the privacy settings in this
@@ -170,7 +172,9 @@ Undocumented registry folklore isn't a level. It isn't here.
 Microsoft documents most of these Windows policies for Pro, Enterprise and
 Education, and says nothing either way about Home. schizo applies them on
 Home anyway (writing a policy Windows doesn't read is harmless) and says so
-in its output; it has only been tested on Pro. Rules Microsoft explicitly limits to
+in its output. On a 26H2 Home VM, Settings showed two of them taking effect:
+diagnostic data locked to required, and tailored experiences locked off.
+The others were applied and restored there, but their effect wasn't observed. Rules Microsoft explicitly limits to
 Enterprise/Education, like turning diagnostic data fully off, are only
 applied there.
 
@@ -198,11 +202,12 @@ understands.
   install paths. Portable apps in random folders aren't seen.
 - Windows 11 24H2 (build 26100) and later. Server and managed (domain-joined
   or MDM-enrolled) machines are refused; `-Audit` still works. Applying and
-  restoring has been tested on Windows 11 Pro build 26300 (it reports itself
-  as 26H2) in a VM. On 26200 Home only `-Audit` has been run, and 24H2 hasn't
-  been tried.
-- Windows protects a few policy values from everything but Group Policy (the
-  widgets one, for example). schizo doesn't fight that; such settings are in
+  restoring has been tested on Windows 11 26H2 (build 26300) Home and Pro in
+  VMs. 25H2 (26200) has only had `-Audit` runs, because Microsoft no longer
+  offers 25H2 install media; 24H2 Home and Pro are out of servicing and
+  aren't targeted.
+- Windows protects a few policy values from everything but Group Policy (on
+  Pro, the widgets one). schizo doesn't fight that; such settings are in
   `docs\not-shipped.md`.
 - Updates can put things back. Run schizo again after big updates.
 - Browser extension report reads the current user's Chrome, Edge, Brave and
@@ -213,7 +218,7 @@ understands.
 
 Unit tests run anywhere and only touch a scratch key under `HKCU` and a temp
 folder. Everything that changes HKLM, services or the firewall is tested in a
-throwaway Windows VM with its network unplugged: apply, apply again, restore,
+throwaway Windows VM (26H2 Home and Pro) with its network unplugged: apply, apply again, restore,
 drift, existing policies, a write Windows refuses, untrusted backup folders,
 and a comparison of every target, also through `reg.exe` and `sc.exe`, against
 the state before the first run. With the rules applied, `chrome://policy`,

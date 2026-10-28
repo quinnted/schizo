@@ -38,7 +38,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/dotnet/core/tools/telemetry'
-            Tested   = 'not run: not installed in the test vm'
+            Tested   = '.net sdk 9.0.320, win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -51,7 +51,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_telemetry'
-            Tested   = 'powershell 7.6.9, win11 pro 26300 vm: applied and restored'
+            Tested   = 'powershell 7.6.9, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -64,7 +64,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/cli/azure/azure-cli-configuration'
-            Tested   = 'not run: not installed in the test vm'
+            Tested   = 'azure cli, win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -77,7 +77,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://github.com/Azure/azure-functions-core-tools/blob/main/README.md'
-            Tested   = 'not run: not installed in the test vm'
+            Tested   = 'functions core tools 4.16, win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -90,7 +90,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://cli.github.com/manual/gh_help_environment'
-            Tested   = 'gh 2.103, win11 pro 26300 vm: applied and restored'
+            Tested   = 'gh 2.103, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

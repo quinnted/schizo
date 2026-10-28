@@ -23,7 +23,7 @@
             Breaks   = 'Nothing known. (0 would also cut required data, which Microsoft recommends against.)'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/diagnosticdata'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -36,7 +36,7 @@
             Breaks   = 'Less personalized MSN and Bing content.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/personalizationreportingenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -49,7 +49,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/edge3pserptelemetryenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -62,7 +62,7 @@
             Breaks   = 'Nothing known. (0 would also drop site compatibility fixes, which Microsoft recommends against.)'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/experimentationandconfigurationservicecontrol'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -75,7 +75,7 @@
             Breaks   = 'Sending feedback to Microsoft from Edge.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/userfeedbackallowed'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -94,7 +94,7 @@
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/spotlightexperiencesandrecommendationsenabled',
                        'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/showrecommendationsenabled',
                        'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/defaultbrowsersettingscampaignenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -107,7 +107,7 @@
             Breaks   = 'Price comparison, coupons and cashback offers in Edge.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/edgeshoppingassistantenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -124,7 +124,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/newtabpagecontentenabled',
                        'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/newtabpagehidedefaulttopsites'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -141,7 +141,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/alternateerrorpagesenabled',
                        'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/resolvenavigationerrorsusewebservice'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -154,7 +154,7 @@
             Breaks   = 'Grammar suggestions; spelling suggestions get simpler.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/microsofteditorproofingenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -167,7 +167,7 @@
             Breaks   = 'Some express checkout buttons may not appear.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/paymentmethodqueryenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -180,7 +180,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/adstransparencyenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -197,7 +197,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/implicitsigninenabled',
                        'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/webtobrowsersigninenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -210,7 +210,7 @@
             Breaks   = 'The first Edge window opens a little slower.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/startupboostenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: accepted (edge://policy shows OK), restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored; edge://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -223,7 +223,7 @@
             Breaks   = 'Search suggestions while typing.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/deployedge/microsoft-edge-browser-policies/searchsuggestenabled'
-            Tested   = 'edge 156, win11 pro 26300 vm: applied and restored'
+            Tested   = 'edge 156, win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

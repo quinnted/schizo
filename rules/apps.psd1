@@ -13,7 +13,7 @@
         zoom           = @{
             Name      = 'Zoom Workplace'
             Uninstall = '^Zoom( Workplace)?\b'
-            Publisher = '^Zoom Video Communications'
+            Publisher = '^Zoom (Video )?Communications'
             File      = '%ProgramFiles%\Zoom\bin\Zoom.exe', '%APPDATA%\Zoom\bin\Zoom.exe'
         }
         'amd-uep'        = @{
@@ -51,7 +51,7 @@
             Level    = 'verified'
             Source   = 'https://github.com/ip7z/7zip/blob/main/CPP/Windows/Net.cpp',
                        'https://github.com/ip7z/7zip/blob/main/CPP/7zip/UI/FileManager/AboutDialog.cpp'
-            Tested   = '7-zip 26.05, win11 pro 26300 vm: rules created and removed'
+            Tested   = '7-zip 26.05, win11 pro and home 26300 vms: rules created and removed'
             Reviewed = '2026-10-27'
         }
         @{
@@ -67,7 +67,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0065466'
-            Tested   = 'not run: zoom was not installed in the test vm'
+            Tested   = 'zoom workplace, win11 pro 26300 vm: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{

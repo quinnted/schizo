@@ -17,7 +17,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-system#allowtelemetry',
                        'https://learn.microsoft.com/en-us/windows/privacy/configure-windows-diagnostic-data-in-your-organization'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored; home settings shows it enforced'
             Reviewed = '2026-10-27'
         }
         @{
@@ -44,7 +44,7 @@
             Breaks   = 'Nothing. Feedback Hub still works if you open it yourself.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#donotshowfeedbacknotifications'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -57,7 +57,7 @@
             Breaks   = 'Ads in apps get less personalized.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#disableadvertisingid'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -70,7 +70,7 @@
             Breaks   = 'Nothing. You still get tips, just less targeted ones.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowtailoredexperienceswithdiagnosticdata'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored; home settings shows it locked off'
             Reviewed = '2026-10-27'
         }
         @{
@@ -89,7 +89,7 @@
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#enableactivityfeed',
                        'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#publishuseractivities',
                        'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#uploaduseractivities'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -102,7 +102,7 @@
             Breaks   = 'Nothing. Microsoft''s own suggestions are not covered by this policy.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-experience#allowthirdpartysuggestionsinwindowsspotlight'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -151,7 +151,7 @@
             Breaks   = 'Search results from your OneDrive or work account in the Start menu.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-search#allowcloudsearch'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -164,7 +164,7 @@
             Breaks   = 'Location-aware search results.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-search#allowsearchtouselocation'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -177,7 +177,7 @@
             Breaks   = 'Trending searches and daily illustrations in search.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-search#allowsearchhighlights'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -206,7 +206,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-windowsai#disableaidataanalysis',
                        'https://learn.microsoft.com/en-us/windows/client-management/manage-recall'
-            Tested   = 'win11 pro 26300 vm: applied and restored (no recall hardware)'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored (no recall hardware)'
             Reviewed = '2026-10-27'
         }
         @{
@@ -219,7 +219,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-errorreporting#donotsendadditionaldata'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -233,7 +233,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-admx-icm#ceipenable',
                        'https://learn.microsoft.com/en-us/windows/win32/devnotes/ceipenable'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -246,7 +246,7 @@
             Breaks   = 'Nothing. Local suggestions keep working.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-textinput#allowlinguisticdatacollection'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -260,7 +260,7 @@
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-deliveryoptimization#dodownloadmode',
                        'https://learn.microsoft.com/en-us/windows/deployment/do/waas-delivery-optimization-faq'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -273,7 +273,7 @@
             Breaks   = 'Sites may guess your language from the browser instead.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services#181-general'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -286,7 +286,7 @@
             Breaks   = 'The "most used" list in Start stops filling in.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/privacy/manage-connections-from-windows-operating-system-components-to-microsoft-services#181-general'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -299,7 +299,7 @@
             Breaks   = 'Nothing else in Start.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-start#hiderecommendedpersonalizedsites'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -313,7 +313,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-notifications#disableaccountnotifications'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -326,7 +326,7 @@
             Breaks   = 'The online help links inside Settings pages.'
             Level    = 'verified'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-settings#allowonlinetips'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -339,7 +339,7 @@
             Breaks   = 'Voice typing and dictation that rely on online speech recognition.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#allowinputpersonalization'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -352,7 +352,7 @@
             Breaks   = 'Clipboard sync, if you turned it on. Local clipboard history keeps working.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-privacy#allowcrossdeviceclipboard'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -365,7 +365,7 @@
             Breaks   = 'Phone Link: texts, calls, photos and notifications from your phone.'
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-connectivity#allowphonepclinking'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
         @{
@@ -379,7 +379,7 @@
             Level    = 'aggressive'
             Source   = 'https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remote-desktop-services-vdi-optimize-configuration',
                        'https://learn.microsoft.com/en-us/windows/privacy/configure-windows-diagnostic-data-in-your-organization'
-            Tested   = 'win11 pro 26300 vm: applied and restored'
+            Tested   = 'win11 pro and home 26300 vms: applied and restored'
             Reviewed = '2026-10-27'
         }
     )

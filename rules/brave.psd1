@@ -23,7 +23,7 @@
             Level    = 'verified'
             Source   = 'https://github.com/brave/brave-core/blob/master/components/policy/resources/templates/policy_definitions/BraveSoftware/BraveStatsPingEnabled.yaml',
                        'https://github.com/brave/brave-core/blob/master/components/policy/resources/templates/policy_definitions/BraveSoftware/BraveP3AEnabled.yaml'
-            Tested   = 'brave, win11 pro 26300 vm: accepted (brave://policy shows OK), restored'
+            Tested   = 'brave, win11 pro and home 26300 vms: applied and restored; brave://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -36,7 +36,7 @@
             Breaks   = 'Nothing known.'
             Level    = 'verified'
             Source   = 'https://github.com/brave/brave-core/blob/master/components/policy/resources/templates/policy_definitions/BraveSoftware/BraveWebDiscoveryEnabled.yaml'
-            Tested   = 'brave, win11 pro 26300 vm: accepted (brave://policy shows OK), restored'
+            Tested   = 'brave, win11 pro and home 26300 vms: applied and restored; brave://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
         @{
@@ -49,7 +49,7 @@
             Breaks   = 'Brave Rewards and anything you earn through it.'
             Level    = 'aggressive'
             Source   = 'https://github.com/brave/brave-core/blob/master/components/policy/resources/templates/policy_definitions/BraveSoftware/BraveRewardsDisabled.yaml'
-            Tested   = 'brave, win11 pro 26300 vm: accepted (brave://policy shows OK), restored'
+            Tested   = 'brave, win11 pro and home 26300 vms: applied and restored; brave://policy shows OK on pro'
             Reviewed = '2026-10-27'
         }
     )

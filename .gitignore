@@ -1,2 +1,2 @@
-tests/vm/out/
+tests/vm/out*/
 testResults.xml
