@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [powershell, pwsh]
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install test tools
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -RequiredVersion 6.2.0 -Scope CurrentUser -Force -SkipPublisherCheck
+          Install-Module PSScriptAnalyzer -RequiredVersion 1.25.0 -Scope CurrentUser -Force
+
+      - name: lint
+        run: |
+          $found = 'schizo.ps1', 'restore.ps1', 'lib', 'tools' | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Recurse -Settings .\PSScriptAnalyzerSettings.psd1 }
+          $found | Format-Table -AutoSize | Out-String -Width 200
+          if ($found) { exit 1 }
+
+      # the runner is elevated, so the tests that need a standard user skip
+      # themselves. nothing here touches HKLM, services or the firewall; that
+      # only happens in tests\vm\guest.ps1, which is not a *.Tests.ps1 file and
+      # runs only inside a throwaway VM.
+      - name: test
+        run: |
+          Import-Module Pester -RequiredVersion 6.2.0
+          $c = New-PesterConfiguration
+          $c.Run.Path = '.\tests'
+          $c.Run.Exit = $true
+          $c.Output.Verbosity = 'Detailed'
+          Invoke-Pester -Configuration $c
