@@ -20,6 +20,8 @@ cd schizo
 
 `-Audit` does not change anything and does not need Administrator.
 
+`-ShowUnknown` lists installed applications no rule covers. Runtimes, drivers, Store packages with nothing in the Start menu, parts of Windows and Steam games are only counted. `-ShowUnknownAll` lists those too.
+
 To apply the rules:
 
 ```powershell
@@ -28,94 +30,7 @@ To apply the rules:
 
 Run that from an Administrator PowerShell.
 
-<<<<<<< HEAD
 For the rules that disable an actual feature:
-=======
-On a shared PC, keep the folder somewhere only administrators can write; see
-SECURITY.md.
-
-There is no installer, service, scheduled task, tray icon or account. schizo
-runs, changes things, prints what it did and exits. The settings it makes
-stay; schizo doesn't.
-
-From the test VM (Windows 11 Pro with Edge, Chrome, Brave, Firefox,
-Thunderbird, VS Code, 7-Zip, PowerShell 7 and GitHub CLI installed),
-shortened:
-
-```
-windows 11 pro 26H2 (26300)
-65 apps found
-
-windows
-  diagnostic data                     required only
-  feedback prompts                    off
-  advertising id                      off
-  tailored experiences                off
-  activity history                    off
-  ...
-7-zip
-  outbound network                    blocked
-brave
-  usage ping and p3a                  off
-  web discovery project               off
-google chrome
-  visited urls to google              off
-  domain reliability reports          off
-  ...
-microsoft edge
-  diagnostic data                     required only
-  browsing data for ads and news      off
-  ...
-
-needs a human
-  google chrome: usage statistics and crash reports
-    chrome://settings/syncSetup > turn off "Help improve Chrome's features and
-    performance". The policy for this only works on managed PCs.
-
-54 changed
-0 already set
-0 failed
-1 need a human
-10 aggressive rules not applied (-Aggressive)
-55 apps have no rules (-ShowUnknown)
-
-backup:
-  C:\ProgramData\schizo\runs\2026-10-28_030131Z
-
-done.
-```
-
-Browser extensions with broad access get their own list: names and what
-they can do, nothing else, and nothing is removed or disabled. Extensions a
-school or company installed through browser policy are listed separately:
-
-```
-browser extensions with broad access (no rules; not touched)
-  chrome   Tampermonkey [Default]
-           all sites, intercepts requests
-
-managed browser extensions with broad access (installed by policy; not touched)
-  chrome   Lightspeed Filter Agent [Profile 7]
-           all sites, browsing history, controls the proxy, manages other
-           extensions, intercepts requests
-```
-
-Run it again whenever you like. The second run on that VM printed
-`0 changed` and `54 already set`, and made no backup folder. If an update
-puts something back, the next run sets it again.
-
-| Option | |
-|---|---|
-| `-Audit` | Show what would change. Changes nothing, writes nothing. |
-| `-Aggressive` | Also apply rules that cost a feature (voice typing, Phone Link, search suggestions, OneDrive results in Start search, Edge's coupons, third-party cookies, the DiagTrack service, ...). Each one says what it breaks. |
-| `-ShowUnknown` | List installed applications that no rule covers. Runtimes, drivers, Store packages with nothing in the Start menu, parts of Windows and Steam games are counted, not listed. |
-| `-ShowUnknownAll` | List everything the inventory found that no rule covers, each marked with what schizo took it for. |
-
-Exit codes: 0 fine, 1 something failed, 2 didn't run (not admin, broken
-rules, untrusted backup folder, managed machine).
-
-## Restoring
->>>>>>> 94f7f99 (clean up real machine audit output)
 
 ```powershell
 .\schizo.ps1 -Aggressive
@@ -123,7 +38,7 @@ rules, untrusted backup folder, managed machine).
 
 ## what it covers
 
-There are currently 80 rules.
+There are currently 76 rules that change something (12 of them only with `-Aggressive`) and 5 that just print where the setting is.
 
 Windows settings include diagnostic data, advertising ID, tailored experiences, activity history, Recall, search/cloud suggestions, CEIP, typing data, Delivery Optimization and some Start menu junk.
 
@@ -176,34 +91,9 @@ if you want the old value restored anyway.
 
 Backups are under:
 
-<<<<<<< HEAD
 ```text
 C:\ProgramData\schizo\runs\
 ```
-=======
-- Applies the rules it has. It doesn't find telemetry nobody has documented,
-  and it can't see what an app sends over HTTPS.
-- Per-user settings are applied to the account that runs schizo. If an
-  administrator elevates for a standard user, those rules are skipped and
-  schizo says so.
-- Inventory is the uninstall registry, Store packages, services and known
-  install paths. Portable apps in random folders aren't seen.
-- Windows 11 24H2 (build 26100) and later. Server and managed (domain-joined
-  or MDM-enrolled) machines are refused; `-Audit` still works. Applying and
-  restoring has been tested on Windows 11 26H2 (build 26300) Home and Pro in
-  VMs. 25H2 (26200) has only had `-Audit` runs, because Microsoft no longer
-  offers 25H2 install media; 24H2 Home and Pro are out of servicing and
-  aren't targeted.
-- Windows protects a few policy values from everything but Group Policy (on
-  Pro, the widgets one). schizo doesn't fight that; such settings are in
-  `docs\not-shipped.md`.
-- Updates can put things back. Run schizo again after big updates.
-- Browser extension report reads the current user's Chrome, Edge, Brave and
-  Firefox profiles and lists permissions as requested in the manifest. It
-  doesn't know whether you withheld site access. "Installed by policy" comes
-  from the browser's own record of where an extension came from; when a
-  profile's prefs can't be read, nothing is claimed about the source.
->>>>>>> 94f7f99 (clean up real machine audit output)
 
 ## things schizo does not change
 
@@ -212,6 +102,8 @@ Defender, Windows Update, Windows Firewall configuration, SmartScreen and UAC ar
 It also does not uninstall software, remove browser extensions, edit the hosts file or start blocking IP addresses.
 
 Unknown software is left alone.
+
+Browser extensions with broad access (all sites, history, proxy and so on) in Chrome, Edge, Brave and Firefox are listed with what they can do. Extensions installed by browser policy, for example by a school, are listed separately. Nothing is removed or disabled.
 
 ## repeated runs
 
@@ -239,13 +131,15 @@ It cannot disable telemetry nobody has found yet.
 
 Portable applications in random directories may not show up in inventory.
 
-Domain-joined and MDM-managed machines are audit-only.
+Windows 11 24H2 (build 26100) or later. Windows Server, domain-joined and MDM-managed machines are audit-only.
+
+Applying and restoring has only been tested on 26H2 (build 26300) VMs. 25H2 (26200) has had `-Audit` runs on real hardware but no apply/restore. Enterprise and Education have not been tested at all.
 
 And obviously none of this deletes data a company already has.
 
 ## tests
 
-204 unit tests currently pass under Windows PowerShell 5.1 and PowerShell 7.
+266 unit tests currently pass under Windows PowerShell 5.1 and PowerShell 7.
 
 System-changing tests are run in throwaway Windows 11 26H2 Home and Pro VMs.
 
