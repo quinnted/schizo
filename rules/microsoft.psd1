@@ -4,8 +4,11 @@
 @{
     Apps  = @{
         office        = @{
-            Name = 'Microsoft 365 / Office'
-            File = '%ProgramFiles%\Microsoft Office\root\Office16\WINWORD.EXE',
+            Name      = 'Microsoft 365 / Office'
+            # click-to-run microsoft 365 is always 16.0; older retail office isn't.
+            Uninstall = '^Microsoft 365\b'
+            Publisher = '^Microsoft Corporation$'
+            File      = '%ProgramFiles%\Microsoft Office\root\Office16\WINWORD.EXE',
                    '%ProgramFiles(x86)%\Microsoft Office\root\Office16\WINWORD.EXE',
                    '%ProgramFiles%\Microsoft Office\root\Office16\EXCEL.EXE',
                    '%ProgramFiles(x86)%\Microsoft Office\root\Office16\EXCEL.EXE'

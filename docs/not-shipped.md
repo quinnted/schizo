@@ -71,7 +71,8 @@ Last reviewed 2026-10-27 against Windows 11 25H2 and current vendor docs.
 | Visual Studio feedback policies | Value types not documented. |
 | winget, Azure CLI config file, VS Code settings.json | Per-user JSON/INI files. schizo doesn't rewrite config files yet; VS Code and Azure CLI are covered through a policy and an environment variable instead. |
 | Docker Desktop | The analytics key isn't documented, and the admin settings file forces sign-in. |
-| Discord, Spotify, Adobe Creative Cloud | Account-side settings only. schizo tells you where they are. |
+| Discord, Adobe desktop apps | Account-side settings only. schizo prints where they are when the app is installed. |
+| Spotify | The only documented control is an account setting for ad personalization; there is nothing documented for usage data. |
 | Slack, Dropbox, Steam, Epic, Razer, Corsair, Logitech G HUB | No documented telemetry control. |
 | Firewall-blocking Notepad++, KeePass, Paint.NET, VLC, OBS | Either they need the network for updates (a security cost) or plugins in the same process do. 7-Zip has neither, so it is the one shipped. |
 | Update-check settings in general | Not telemetry, and turning them off means missing security fixes. |

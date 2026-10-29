@@ -16,6 +16,22 @@ function Get-ErrorText {
     $e.Message
 }
 
+# advice and extension facts can run long; wrap them at the indent instead of
+# letting the console fold them back to column 0.
+function Format-Wrapped {
+    param([string]$Text, [int]$Indent, [int]$Width = 78)
+    $pad = ' ' * $Indent
+    $line = ''
+    foreach ($word in ($Text -split ' ' | Where-Object { $_ })) {
+        if ($line -and ($Indent + $line.Length + 1 + $word.Length) -gt $Width) {
+            $pad + $line
+            $line = $word
+        }
+        elseif ($line) { $line += " $word" }
+        else { $line = $word }
+    }
+    if ($line) { $pad + $line }
+}
 function Format-State {
     param([hashtable]$State)
     if (-not $State -or -not $State.Exists) { return 'not set' }

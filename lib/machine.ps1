@@ -54,7 +54,10 @@ function Get-InstalledApps {
                     $k = $root.OpenSubKey($name)
                     if (-not $k) { continue }
                     try {
-                        $display = [string]$k.GetValue('DisplayName')
+                        # some installers write a trailing NUL into REG_SZ values (roblox
+                        # does), which then never compares equal to anything.
+                        $text = { param($v) ([string]$k.GetValue($v)).Trim([char]0, ' ') }
+                        $display = & $text 'DisplayName'
                         if (-not $display.Trim()) { continue }
                         if ($k.GetValue('SystemComponent') -eq 1) { continue }
                         if ($k.GetValue('ParentKeyName')) { continue }
@@ -62,7 +65,7 @@ function Get-InstalledApps {
 
                         # the 32 and 64-bit views share some keys on purpose, and some
                         # installers write both. one entry per name and version.
-                        $version = [string]$k.GetValue('DisplayVersion')
+                        $version = & $text 'DisplayVersion'
                         $id = "$display|$version".ToLowerInvariant()
                         if ($seen.ContainsKey($id)) { continue }
                         $seen[$id] = $true
@@ -70,10 +73,11 @@ function Get-InstalledApps {
                         @{
                             Name      = $display.Trim()
                             Version   = $version
-                            Publisher = [string]$k.GetValue('Publisher')
-                            Dir       = [string]$k.GetValue('InstallLocation')
+                            Publisher = & $text 'Publisher'
+                            Dir       = & $text 'InstallLocation'
                             Scope     = $s.Scope
                             Source    = 'uninstall'
+                            Key       = $name
                         }
                     }
                     finally { $k.Dispose() }
@@ -92,14 +96,34 @@ function Get-StoreApps {
     foreach ($p in $packages) {
         if ($p.IsFramework -or $p.IsResourcePackage -or $p.IsBundle) { continue }
         if ([string]$p.SignatureKind -eq 'System') { continue }
-        @{
+        $entry = @{
             Name      = [string]$p.Name
             Version   = [string]$p.Version
-            Publisher = ([string]$p.Publisher -replace '^CN=([^,]+).*$', '$1')
+            Publisher = ''
             Dir       = [string]$p.InstallLocation
             Scope     = 'user'
             Source    = 'store'
+            Title     = ''
+            Listed    = $true
         }
+        # the manifest has the names a person would recognise, and says whether
+        # the package puts anything in the Start menu. codecs, runtimes and the
+        # sparse packages behind shell extensions don't.
+        $manifest = Join-Path $entry.Dir 'AppxManifest.xml'
+        if ($entry.Dir -match '^[A-Za-z]:\\' -and (Test-Path -LiteralPath $manifest -PathType Leaf)) {
+            try {
+                [xml]$x = [IO.File]::ReadAllText($manifest)
+                $props = $x.Package.Properties
+                if ([string]$props.DisplayName -notmatch '^ms-resource:') { $entry.Title = [string]$props.DisplayName }
+                if ([string]$props.PublisherDisplayName -notmatch '^ms-resource:') { $entry.Publisher = [string]$props.PublisherDisplayName }
+                $apps = @($x.Package.Applications.Application | Where-Object { $_ })
+                $entry.Listed = @($apps | Where-Object { $_.VisualElements.AppListEntry -ne 'none' }).Count -gt 0
+            }
+            # an unreadable manifest leaves the package name, and the package listed:
+            # when unsure, show it.
+            catch { $entry.Listed = $true }
+        }
+        $entry
     }
 }
 
@@ -116,6 +140,14 @@ function Get-ConsoleUserSid {
     $sids | Select-Object -Unique
 }
 
+function Test-AppEntry {
+    param([hashtable]$App, [hashtable]$Entry)
+    if ($Entry.Source -eq 'uninstall') {
+        return [bool]($App.Uninstall -and $Entry.Name -match $App.Uninstall -and (-not $App.Publisher -or $Entry.Publisher -match $App.Publisher))
+    }
+    [bool](@($App.Appx) -contains $Entry.Name)
+}
+
 function Find-App {
     param([hashtable]$App, [object[]]$Installed, [object[]]$Services)
 
@@ -128,8 +160,7 @@ function Find-App {
 
     if ($App.Uninstall) {
         foreach ($i in $Installed) {
-            if ($i.Source -ne 'uninstall' -or $i.Name -notmatch $App.Uninstall) { continue }
-            if ($App.Publisher -and $i.Publisher -notmatch $App.Publisher) { continue }
+            if ($i.Source -ne 'uninstall' -or -not (Test-AppEntry $App $i)) { continue }
             $dir = $i.Dir
             if ($dir) { $dir = $dir.Trim().Trim('"').TrimEnd('\') }
             # InstallLocation in HKCU is anyone's to write. a \\server\share path
@@ -189,15 +220,18 @@ function Get-Machine {
     $services = @(Get-Service -ErrorAction SilentlyContinue | ForEach-Object { $_.Name })
 
     $found = @{}
-    $matched = @{}
     foreach ($id in $Apps.Keys) {
         if ($id -eq 'windows') { continue }
         $hit = Find-App $Apps[$id] $installed $services
-        if ($hit) {
-            $found[$id] = $hit
-            if ($hit.Entry) { $matched[[string]$hit.Entry.Name] = $true }
-        }
+        if ($hit) { $found[$id] = $hit }
     }
+    # everything a rule's app definition covers is known, not just the entry
+    # Find-App happened to pick: one adobe rule covers every adobe app.
+    $unknown = @($installed | Where-Object {
+            $entry = $_
+            -not @($Apps.Values | Where-Object { Test-AppEntry $_ $entry }).Count
+        })
+    foreach ($u in $unknown) { $u.Kind = Get-UnknownKind $u }
 
     $me = [Security.Principal.WindowsIdentity]::GetCurrent()
     $console = @(Get-ConsoleUserSid)
@@ -211,10 +245,60 @@ function Get-Machine {
         Label      = $windows.Label
         Installed  = $installed
         Found      = $found
-        Unknown    = @($installed | Where-Object { -not $matched.ContainsKey([string]$_.Name) })
+        Unknown    = $unknown
         Gaps       = $gaps
         User       = $me.Name
         UserSid    = $me.User.Value
         OtherUser  = $otherUser
     }
+}
+
+# what an unknown entry is, when it plainly isn't an application someone
+# would research: a runtime, a driver, a store package with nothing in the
+# Start menu, a piece of windows, a steam game. $null means "show it".
+# when the evidence is thin it stays $null.
+function Get-UnknownKind {
+    param([hashtable]$Entry)
+
+    $name = [string]$Entry.Name
+    if ($name -match 'Redistributable|\bRuntime\b|Common Components|Framework Redistributable|\.NET Framework') { return 'runtime' }
+    if ($name -match '\bLanguage (Experience )?Pack\b') { return 'language pack' }
+    # "Realtek Audio Driver", "Windows Driver Package - ...", but not "Driver Booster".
+    if ($name -match '\bDrivers?( Package)?(\s*[-(\d].*)?$') { return 'driver' }
+    if ($Entry.Source -eq 'store') {
+        if (-not $Entry.Listed) { return 'support package' }
+        # microsoft names the packages that ship as part of windows this way.
+        if ($name -match '^(Microsoft\.Windows|MicrosoftWindows\.)') { return 'part of windows' }
+    }
+    # steam registers every game as "Steam App <id>"; steam itself is the app.
+    if ($Entry.Key -match '^Steam App \d+$') { return 'steam game' }
+    $null
+}
+
+# a name to tell "Python 3.14.6" and "Python 3.14.6 (64-bit)" are the same
+# thing: no versions, no bitness, no "for <user>".
+function Get-AppKey {
+    param([hashtable]$Entry)
+    $n = [string]$Entry.Title
+    if (-not $n) { $n = [string]$Entry.Name }
+    $n = $n.ToLowerInvariant()
+    $n = $n -replace '\(?\b(x64|x86|64-bit|32-bit|amd64)\b\)?', ''
+    $n = $n -replace "\bfor $([regex]::Escape($env:USERNAME.ToLowerInvariant()))$", ''
+    $n = $n -replace '\bv?\d+(\.\d+)+[\w.-]*', '' -replace '\bversion\b', ''
+    ($n -replace '[^a-z0-9]+', ' ').Trim()
+}
+
+function Format-UnknownApp {
+    param([hashtable]$Entry)
+    $name = [string]$Entry.Title
+    if (-not $name) { $name = [string]$Entry.Name -replace '^[0-9A-F]{8}\.', '' }
+    $line = Format-Untrusted $name
+    # plenty of installers put the version in the name already.
+    if ($Entry.Version -and $name -notmatch [regex]::Escape($Entry.Version)) { $line += " $(Format-Untrusted $Entry.Version 20)" }
+    $publisher = [string]$Entry.Publisher
+    if ($publisher -and $publisher -notmatch '^[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}$' -and
+        -not $name.StartsWith(($publisher -split ' ')[0], [StringComparison]::OrdinalIgnoreCase)) {
+        $line += " ($(Format-Untrusted $publisher 40))"
+    }
+    $line
 }

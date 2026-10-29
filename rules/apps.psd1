@@ -25,9 +25,10 @@
             Appx = 'NVIDIACorp.NVIDIAControlPanel'
             File = '%ProgramFiles%\NVIDIA Corporation\Control Panel Client\nvcplui.exe'
         }
-        'adobe-cc'       = @{
-            Name      = 'Adobe Creative Cloud'
-            Uninstall = '^Adobe Creative Cloud$'
+        adobe          = @{
+            Name      = 'Adobe'
+            Uninstall = '^Adobe\b'
+            Publisher = '^Adobe\b'
         }
         discord        = @{
             Name      = 'Discord'
@@ -90,10 +91,10 @@
         }
         @{
             Id       = 'adobe.desktop-app-usage'
-            App      = 'adobe-cc'
+            App      = 'adobe'
             Name     = 'desktop app usage'
-            Advice   = 'account.adobe.com > Data and privacy > turn off "Desktop app usage". It is an account setting; nothing on this PC controls it.'
-            Why      = 'Adobe collects desktop app usage per account. Business and education accounts don''t have the setting because Adobe says it doesn''t collect it for them.'
+            Advice   = 'account.adobe.com > Data and privacy > turn off "Desktop app usage". One account setting covers every Adobe desktop app; work and school accounts don''t have it.'
+            Why      = 'Adobe collects usage of all its desktop apps per account, and documents no local switch. Adobe says it doesn''t collect it for business and education accounts.'
             Source   = 'https://www.adobe.com/privacy/app-usage-info-faq.html'
             Reviewed = '2026-10-27'
         }
@@ -101,7 +102,7 @@
             Id       = 'discord.data-use'
             App      = 'discord'
             Name     = 'usage data'
-            Advice   = 'Discord > User Settings > Data & Privacy > turn off "Use data to improve Discord". Discord says the app keeps sending the same signals afterwards and only stops using them for this purpose. Nothing on this PC can stop that.'
+            Advice   = 'Discord > User Settings > Data & Privacy > turn off "Use data to improve Discord". Discord says the app still sends the same signals; the switch only stops Discord using them for this. No local setting is known that stops the signals and leaves Discord working.'
             Why      = 'This is the only documented control, and it is an account setting, not a local one.'
             Source   = 'https://support.discord.com/hc/articles/21864805694999'
             Reviewed = '2026-10-27'

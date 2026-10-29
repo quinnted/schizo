@@ -18,7 +18,13 @@ admin rights (a few things can't be read without them).
 Also apply rules marked aggressive. Those cost a feature; each one says which.
 
 .PARAMETER ShowUnknown
-List installed software that no rule knows about.
+List installed applications that no rule knows about. Runtimes, drivers,
+Store support packages, parts of Windows and Steam games are counted but
+not listed.
+
+.PARAMETER ShowUnknownAll
+List everything the inventory found that no rule knows about, each with what
+schizo took it for.
 
 .EXAMPLE
 .\schizo.ps1
@@ -30,7 +36,8 @@ List installed software that no rule knows about.
 param(
     [switch]$Audit,
     [switch]$Aggressive,
-    [switch]$ShowUnknown
+    [switch]$ShowUnknown,
+    [switch]$ShowUnknownAll
 )
 
 $ErrorActionPreference = 'Stop'
@@ -136,7 +143,8 @@ foreach ($r in $shown) {
 foreach ($r in $results) {
     if ($r.Status -in 'aggressive', 'otheruser') { $counts[$r.Status] = 1 + [int]$counts[$r.Status] }
     if ($r.Status -eq 'advice') {
-        $human.Add("$($rulebase.Apps[$r.Rule.App].Name.ToLowerInvariant()): $($r.Rule.Name)`n    $($r.Rule.Advice)")
+        $advice = (Format-Wrapped $r.Rule.Advice 4) -join "`n"
+        $human.Add("$($rulebase.Apps[$r.Rule.App].Name.ToLowerInvariant()): $($r.Rule.Name)`n$advice")
     }
 }
 
@@ -147,6 +155,11 @@ if ($counts['otheruser']) {
 # extensions are per user, and only the current user's profiles are read.
 $extensions = @()
 if (-not $machine.OtherUser) { $extensions = @(Get-BrowserExtensions) }
+# what a school or company put there by policy is listed apart from what the
+# user installed. both lists only show extensions with broad access.
+$managed = @($extensions | Where-Object { $_.Source -eq 'policy' })
+$broad = @($extensions | Where-Object { $_.Facts.Count })
+Set-ExtensionLabel $broad
 
 if ($human.Count) {
     Write-Host ''
@@ -154,25 +167,48 @@ if ($human.Count) {
     foreach ($h in $human) { Write-Host "  $h" }
 }
 
-if ($extensions.Count) {
+function Write-Extensions {
+    param([string]$Title, [object[]]$List)
+    if (-not $List.Count) { return }
     Write-Host ''
-    Write-Host 'browser extensions with broad access (no rules; not touched)'
-    foreach ($e in $extensions) {
-        Write-Host ('  {0,-8} {1}' -f $e.Browser, (Format-Untrusted "$($e.Name) [$($e.Profile)]" 70))
-        Write-Host "           $($e.Facts -join ', ')" -ForegroundColor DarkGray
+    Write-Host $Title
+    foreach ($e in ($List | Sort-Object { $_.Browser }, { $_.Label })) {
+        Write-Host ('  {0,-8} {1}' -f $e.Browser, $e.Label)
+        $facts = @()
+        if ($e.Disabled) { $facts += 'disabled' }
+        if ($e.Source -eq 'other program') { $facts += 'added by another program' }
+        if ($e.Source -eq 'unpacked') { $facts += 'loaded unpacked' }
+        $facts += $e.Facts
+        foreach ($l in (Format-Wrapped ($facts -join ', ') 11)) { Write-Host $l -ForegroundColor DarkGray }
     }
 }
+Write-Extensions 'browser extensions with broad access (no rules; not touched)' @($broad | Where-Object { $_.Source -ne 'policy' })
+Write-Extensions 'managed browser extensions with broad access (installed by policy; not touched)' @($broad | Where-Object { $_.Source -eq 'policy' })
 
-if ($ShowUnknown -and @($machine.Unknown).Count) {
+# the unknown list is for deciding what to research next, so it leaves out
+# what is plainly not an application. -ShowUnknownAll shows all of it.
+$unknownApps = @($machine.Unknown | Where-Object { -not $_.Kind })
+$listed = @{}
+$unknownLines = @(foreach ($u in ($unknownApps | Sort-Object { if ($_.Title) { $_.Title } else { $_.Name } })) {
+        $key = Get-AppKey $u
+        if ($listed.ContainsKey($key)) { continue }
+        $listed[$key] = $true
+        Format-UnknownApp $u
+    })
+if ($ShowUnknownAll -and @($machine.Unknown).Count) {
     Write-Host ''
     Write-Host 'no rules'
-    foreach ($u in ($machine.Unknown | Sort-Object { $_.Name })) {
-        $line = Format-Untrusted "$($u.Name) $($u.Version)"
-        if ($u.Publisher) { $line += " ($(Format-Untrusted $u.Publisher 40))" }
+    foreach ($u in ($machine.Unknown | Sort-Object { if ($_.Title) { $_.Title } else { $_.Name } })) {
+        $line = Format-UnknownApp $u
+        if ($u.Kind) { $line += "  [$($u.Kind)]" }
         Write-Host "  $line"
     }
 }
-
+elseif ($ShowUnknown -and $unknownLines.Count) {
+    Write-Host ''
+    Write-Host 'no rules'
+    foreach ($l in $unknownLines) { Write-Host "  $l" }
+}
 Write-Host ''
 if ($Audit) {
     Write-Host "$([int]$counts['would']) would change"
@@ -183,9 +219,13 @@ else {
 Write-Host "$([int]$counts['already']) already set"
 Write-Host "$([int]$counts['failed']) failed"
 Write-Host "$($human.Count) need a human"
-if ($extensions.Count) { Write-Host "$($extensions.Count) extensions with broad access" }
+$userBroad = @($broad | Where-Object { $_.Source -ne 'policy' }).Count
+if ($userBroad) { Write-Host "$userBroad extensions with broad access" }
+if ($managed.Count) { Write-Host "$($managed.Count) extensions installed by policy, $($broad.Count - $userBroad) with broad access" }
 if ($counts['aggressive']) { Write-Host "$($counts['aggressive']) aggressive rules not applied (-Aggressive)" }
-if (-not $ShowUnknown) { Write-Host "$(@($machine.Unknown).Count) apps have no rules (-ShowUnknown)" }
+$hidden = @($machine.Unknown).Count - $unknownApps.Count
+if (-not ($ShowUnknown -or $ShowUnknownAll)) { Write-Host "$($unknownLines.Count) apps have no rules (-ShowUnknown)" }
+if ($hidden -and -not $ShowUnknownAll) { Write-Host "$hidden runtimes, drivers, support packages and games not counted (-ShowUnknownAll)" }
 
 if ($run -and $run.Changes) {
     Write-Host ''

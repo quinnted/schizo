@@ -110,8 +110,8 @@ Describe 'browser extensions' {
         ($found | Where-Object Id -eq ('d' * 32)).Facts | Should -Contain 'all sites'
     }
 
-    It 'leaves narrow extensions out' {
-        $found | Where-Object Id -eq ('c' * 32) | Should -BeNullOrEmpty
+    It 'finds nothing broad about narrow extensions' {
+        ($found | Where-Object Id -eq ('c' * 32)).Facts | Should -BeNullOrEmpty
     }
 
     It 'looks in every profile' {
