@@ -133,7 +133,7 @@ Portable applications in random directories may not show up in inventory.
 
 Windows 11 24H2 (build 26100) or later. Windows Server, domain-joined and MDM-managed machines are audit-only.
 
-Applying and restoring has only been tested on 26H2 (build 26300) VMs. 25H2 (26200) has had `-Audit` runs on real hardware but no apply/restore. Enterprise and Education have not been tested at all.
+Applying and restoring has been tested on 26H2 (build 26300) VMs and on one real Windows 11 Home 25H2 (26200) machine. Enterprise and Education have not been tested at all.
 
 And obviously none of this deletes data a company already has.
 
@@ -142,6 +142,8 @@ And obviously none of this deletes data a company already has.
 266 unit tests currently pass under Windows PowerShell 5.1 and PowerShell 7.
 
 System-changing tests are run in throwaway Windows 11 26H2 Home and Pro VMs.
+
+Outside the VMs, one real Windows 11 Home 25H2 (26200) machine has been through apply, restore and apply again: an audit afterwards shows all 33 rules that match it in place.
 
 The integration tests cover applying rules, running them again, restore, user changes made after schizo ran, existing policy values, failed writes, concurrent runs and backup permissions.
 
